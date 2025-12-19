@@ -32,13 +32,19 @@ jobs:
 
       - name: Build and push multi-arch image
         run: |
-          # Extract version from tag
-          VERSION=${GITHUB_REF#refs/tags/}
-
-          # Build and push latest and version tag
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            --build-arg BASE_IMAGE=ubuntu:24.04 \
-            -t ghcr.io/c-man-the-man/mastchain-ais:latest \
-            -t ghcr.io/c-man-the-man/mastchain-ais:$VERSION \
-            --push .
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg BASE_IMAGE=ubuntu:24.04 \
+              -t ghcr.io/c-man-the-man/mastchain-ais:latest \
+              -t ghcr.io/c-man-the-man/mastchain-ais:$VERSION \
+              --push .
+          else
+            # Branch push → only latest tag
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg BASE_IMAGE=ubuntu:24.04 \
+              -t ghcr.io/c-man-the-man/mastchain-ais:latest \
+              --push .
+          
