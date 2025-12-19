@@ -1,14 +1,7 @@
 # syntax=docker/dockerfile:1
 
-# -----------------------
-# Builder stage
-# -----------------------
-ARG BASE_IMAGE=ubuntu:24.04
+ARG BASE_IMAGE
 FROM ${BASE_IMAGE} AS builder
-
-LABEL org.opencontainers.image.source="https://github.com/c-man-the-man/mastchain-ais"
-LABEL org.opencontainers.image.description="Multi-arch Docker image for MastChain AIS using AIS-catcher"
-LABEL org.opencontainers.image.version="v1.0.0"
 
 # Build dependencies
 RUN apt-get update && apt-get install -y \
@@ -26,26 +19,22 @@ RUN git clone https://github.com/jvde-github/AIS-catcher.git /src \
     && make -j$(nproc)
 
 # -----------------------
-# Runtime stage
+# Runtime image
 # -----------------------
 FROM ${BASE_IMAGE}
 
-# Install runtime dependencies with conditional SSL library
+# Runtime dependencies
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     librtlsdr0 \
-    && if [ "$(dpkg --print-architecture)" = "amd64" ] || [ "$(dpkg --print-architecture)" = "arm64" ]; then \
-         apt-get install -y libssl3; \
-       else \
-         apt-get install -y libssl1.1; \
-       fi \
+    libssl3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the compiled binary from builder
+# Copy built binary
 COPY --from=builder /src/build/AIS-catcher /usr/local/bin/AIS-catcher
 
-# Set working directory for persistent data volume
+# Set working directory
 WORKDIR /data
 
-# Set entrypoint for AIS-catcher
+# Set entrypoint so arguments go to AIS-catcher
 ENTRYPOINT ["/usr/local/bin/AIS-catcher"]
