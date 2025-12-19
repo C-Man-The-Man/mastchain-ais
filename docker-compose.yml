@@ -1,0 +1,25 @@
+services:
+  mastchain-ais:
+    image: ghcr.io/c-man-the-man/mastchain-ais:latest
+    container_name: mastchain-ais
+    restart: unless-stopped
+
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+
+    volumes:
+      - mastchain_data:/data
+
+    environment:
+      TZ: Europe/Madrid  # change to your local timezone
+
+    command: >
+      -v 30
+      -H https://api.mastchain.io/api/submit
+      USERPWD ADD_YOUR_MASTCHAIN_TOKEN_HERE
+      INTERVAL 60
+      --logfile /data/aiscatcher.log
+      --loglevel info
+
+volumes:
+  mastchain_data:
