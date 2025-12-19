@@ -30,18 +30,22 @@ RUN git clone https://github.com/jvde-github/AIS-catcher.git /src \
 # -----------------------
 FROM ${BASE_IMAGE}
 
-# Runtime dependencies
+# Install runtime dependencies with conditional SSL library
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     librtlsdr0 \
-    libssl3 \
+    && if [ "$(dpkg --print-architecture)" = "amd64" ] || [ "$(dpkg --print-architecture)" = "arm64" ]; then \
+         apt-get install -y libssl3; \
+       else \
+         apt-get install -y libssl1.1; \
+       fi \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy built binary from builder
+# Copy the compiled binary from builder
 COPY --from=builder /src/build/AIS-catcher /usr/local/bin/AIS-catcher
 
-# Working directory for persistent data volume
+# Set working directory for persistent data volume
 WORKDIR /data
 
-# Entry point for AIS-catcher
+# Set entrypoint for AIS-catcher
 ENTRYPOINT ["/usr/local/bin/AIS-catcher"]
