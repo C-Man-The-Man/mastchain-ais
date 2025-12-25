@@ -37,14 +37,14 @@ docker run -d \
   -v 30 \
   -N 8100 \
   -H https://api.mastchain.io/api/submit \
-  USERPWD <your-mastchain-token> \
+  USERPWD <YOUR-MASTCHAIN-TOKEN> \
   INTERVAL 60 \
   --logfile /data/aiscatcher.log \
   --loglevel info
 ```
-- Replace <your-mastchain-token> with your MastChain credentials.
-- The -N 8100 flag enables the HTML Web Viewer on port 8100 (the port can be changed).
-- The Web Viewer can be accessed at: http://<host-ip>:8100.
+- Replace <YOUR-MASTCHAIN-TOKEN> with your MastChain credentials.
+- The -N 8100 flag enables the HTML Web Viewer on port 8100 (the port can be changed in the CLI).
+- The Web Viewer can be accessed at: http://host-ip:8100.
 
 ---
 
@@ -94,7 +94,7 @@ docker compose down
 ## HTML Web Viewer
 
 - Port: 8100 (changeable, depending on local needs)
-- Access: http://<host-ip>:8100
+- Access: http://host-ip:8100
 - Shows live AIS traffic and engine status
 - Works on any device with a browser
 - No login required
