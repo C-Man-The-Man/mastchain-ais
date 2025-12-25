@@ -7,6 +7,9 @@ services:
     devices:
       - /dev/bus/usb:/dev/bus/usb
 
+    ports:
+      - "8100:8100"  # changeable depending on local needs, the same port number has to be added to the -N flag
+
     volumes:
       - mastchain_data:/data
 
@@ -15,6 +18,7 @@ services:
 
     command: >
       -v 30
+      -N 8100
       -H https://api.mastchain.io/api/submit
       USERPWD ADD_YOUR_MASTCHAIN_TOKEN_HERE
       INTERVAL 60
