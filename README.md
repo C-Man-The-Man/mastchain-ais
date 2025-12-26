@@ -36,9 +36,7 @@ docker run -d \
   ghcr.io/c-man-the-man/mastchain-ais:latest \
   -v 30 \
   -N 8100 \
-  -H https://api.mastchain.io/api/submit \
-  USERPWD <YOUR-MASTCHAIN-TOKEN> \
-  INTERVAL 60 \
+  -H https://api.mastchain.io/api/submit USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60 \
   --logfile /data/aiscatcher.log \
   --loglevel info
 ```
