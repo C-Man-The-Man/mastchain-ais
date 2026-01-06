@@ -8,22 +8,23 @@ services:
       - /dev/bus/usb:/dev/bus/usb
 
     ports:
-      - "8100:8100"  # changeable depending on local needs, the same port number has to be added to the -N flag
+      - "8100:8100"   # change if needed, use the same port for the -N flag
 
     volumes:
+      - ./config.json:/data/config.json:ro
       - mastchain_data:/data
 
     environment:
-      TZ: Europe/Madrid  # change to your local timezone
+      TZ: Europe/Madrid   # change to your timezone
 
     command: >
       -v 30
       -N 8100
-      -H https://api.mastchain.io/api/submit
-      USERPWD ADD_YOUR_MASTCHAIN_TOKEN_HERE
-      INTERVAL 60
+      -c /data/config.json
+      -H https://api.mastchain.io/api/submit USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60
       --logfile /data/aiscatcher.log
       --loglevel info
 
 volumes:
   mastchain_data:
+
