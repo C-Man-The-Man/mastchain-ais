@@ -13,6 +13,7 @@ It supports **amd64** and **arm64**, making it suitable for Raspberry Pi, Linux 
 - **Docker Compose ready**
 - **Persistent data storage** via Docker volumes
 - **HTML Web Viewer** view live AIS data in your browser
+- **User-editable receiver configuration** (config.json)
 
 ---
 
@@ -26,29 +27,49 @@ It supports **amd64** and **arm64**, making it suitable for Raspberry Pi, Linux 
 
 ## Quick Setup (Docker CLI)
 
+### Create a working directory
+
+```bash
+mkdir mastchain-ais && cd mastchain-ais
+```
+
+### Download the configuration file
+
+```bash
+curl -O https://raw.githubusercontent.com/c-man-the-man/mastchain-ais/main/config.json
+```
+
+Edit `config.json` by preferences (see full parameters explanation lower).
+
+### Run the container
+
 ```bash
 docker run -d \
   --name mastchain-ais \
   --restart unless-stopped \
   --device /dev/bus/usb:/dev/bus/usb \
   -p 8100:8100 \
+  -v $(pwd)/config.json:/data/config.json:ro \
   -v mastchain_data:/data \
   ghcr.io/c-man-the-man/mastchain-ais:latest \
   -v 30 \
   -N 8100 \
+  -c /data/config.json \
   -H https://api.mastchain.io/api/submit USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60 \
   --logfile /data/aiscatcher.log \
   --loglevel info
 ```
+
+**Notes**
 - Replace <YOUR-MASTCHAIN-TOKEN> with your MastChain credentials.
 - The -N 8100 flag enables the HTML Web Viewer on port 8100 (the port can be changed in the CLI).
 - The Web Viewer can be accessed at: http://host-ip:8100.
 
 ---
 
-## Docker Compose Setup
+## Docker Compose Setup (recommended)
 
-### Create and navigate to a directory
+### Create a working directory
 
 ```bash
 mkdir ~/mastchain-ais && cd ~/mastchain-ais
@@ -67,6 +88,42 @@ nano docker-compose.yml
 ```
 - Copy the contents of this repository’s docker-compose.yml 
 - Replace your MastChain credentials (email:token) 
+- Save and exit the file (press **CTRL+O** and **Enter** to save, **CTRL+X** to exit).
+
+### Create the configuration file
+
+```bash
+nano config.json
+```
+
+- Copy the contents of this repository’s config.json
+- Edit the config.json parameters if needed
+- Parameters explanation
+ - `input` - Must remain `RTLSDR` for the MastChain project
+ - `tuner` - Gain control: "auto" or 0–50 (recommended: "auto")
+  - higher values increase sensitivity but may introduce noise
+  - decimals allowed (example: 25.5)
+ - `bandwidth` - RF bandwidth (Hz) 
+  - default 192000
+  - lower values reduce noise
+  - set to 0 to disable
+  - RTL-SDR internally rounds to supported values
+ - `sample_rate` - RTL-SDR sample rate (Hz)
+  - recommended 1536000 (best performance)
+  - set to 288000 for low CPU usage
+  - use a custom value (not recommended)
+ - `freqoffset` - Frequency correction (Hz)
+  - use if the dongle is frequency shifted
+  - positive or negative integer values allowed
+  - 0 means no correction
+  - value is applied in Hz, not PPM, typical values range from -100 to +100
+ - `biastee` - Powers active antennas (set "true" for ON, set "false" for OFF)
+  - only enable if the hardware supports it
+ - `rtlagc` - RTL-SDR automatic gain control (set "true" for ON, set "false" for OFF)
+  - ON - recommended
+  - OFF - manual tuning only
+ - `verbose` - Detailed receiver logs if set to "true"
+  - useful for debugging and tuning 
 - Save and exit the file (press **CTRL+O** and **Enter** to save, **CTRL+X** to exit).
 
 ### Start the container
@@ -97,6 +154,9 @@ docker compose down
 - Works on any device with a browser
 - No login required
 - Only requires the container to be running with -N 8100 and the port exposed
+- Recommended for diagnostics and tuning
+
+---
 
 ## Help & Community
 
@@ -110,9 +170,11 @@ A more detailed guide and community support are available on my [Discord Server]
 - USB access is required for RTL-SDR devices: `--device /dev/bus/usb:/dev/bus/usb`.
 - The image automatically selects the correct architecture (amd64 or arm64).
 - SSL support is enabled for secure HTTPS submissions to MastChain.
+- The image does not modify nor store credentials internally.
+- Configuration is always user owned.
 
 ---
 
 ## License & Credits
-- AIS-catcher is developed by [jvde-github](https://github.com/jvde-github/AIS-catcher) and contributors.
-- This Docker image packages AIS-catcher for MastChain compatible use.
+- **AIS-catcher** is developed by [jvde-github](https://github.com/jvde-github/AIS-catcher) and contributors.
+- This Docker image packages **AIS-catcher** for **MastChain** compatible use.

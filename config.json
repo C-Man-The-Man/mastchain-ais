@@ -1,0 +1,16 @@
+{
+  "receiver": [
+    {
+      "input": "RTLSDR",
+      "rtlsdr": {
+        "tuner": "auto",
+        "bandwidth": 192000,
+        "sample_rate": 1536000,
+        "freqoffset": null,
+        "biastee": false,
+        "rtlagc": true
+      },
+      "verbose": true
+    }
+  ]
+}
