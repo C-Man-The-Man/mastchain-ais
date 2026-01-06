@@ -1,4 +1,6 @@
 {
+  "config": "aiscatcher",
+  "version": 1,
   "receiver": [
     {
       "input": "RTLSDR",
@@ -6,7 +8,7 @@
         "tuner": "auto",
         "bandwidth": 192000,
         "sample_rate": 1536000,
-        "freqoffset": null,
+        "freqoffset": 0,
         "biastee": false,
         "rtlagc": true
       },
