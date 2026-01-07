@@ -54,7 +54,7 @@ docker run -d \
   ghcr.io/c-man-the-man/mastchain-ais:latest \
   -v 30 \
   -N 8100 \
-  -c /data/config.json \
+  -C /data/config.json \
   -H https://api.mastchain.io/api/submit USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60 \
   --logfile /data/aiscatcher.log \
   --loglevel info
@@ -97,34 +97,58 @@ nano config.json
 ```
 
 - Copy the contents of this repository’s config.json
-- Edit the config.json parameters if needed
-- Parameters explanation
- - `input` - Must remain `RTLSDR` for the MastChain project
- - `tuner` - Gain control: "auto" or 0–50 (recommended: "auto")
-  - higher values increase sensitivity but may introduce noise
-  - decimals allowed (example: 25.5)
- - `bandwidth` - RF bandwidth (Hz) 
-  - default 192000
-  - lower values reduce noise
-  - set to 0 to disable
-  - RTL-SDR internally rounds to supported values
- - `sample_rate` - RTL-SDR sample rate (Hz)
-  - recommended 1536000 (best performance)
-  - set to 288000 for low CPU usage
-  - use a custom value (not recommended)
- - `freqoffset` - Frequency correction (Hz)
-  - use if the dongle is frequency shifted
-  - positive or negative integer values allowed
-  - 0 means no correction
-  - value is applied in Hz, not PPM, typical values range from -100 to +100
- - `biastee` - Powers active antennas (set "true" for ON, set "false" for OFF)
-  - only enable if the hardware supports it
- - `rtlagc` - RTL-SDR automatic gain control (set "true" for ON, set "false" for OFF)
-  - ON - recommended
-  - OFF - manual tuning only
- - `verbose` - Detailed receiver logs if set to "true"
-  - useful for debugging and tuning 
-- Save and exit the file (press **CTRL+O** and **Enter** to save, **CTRL+X** to exit).
+- Edit the config.json **parameters** if needed
+
+#### Parameters explanation
+
+`"config": "aiscatcher"`
+- Don't change, this image is an **AIS-Catcher-Control** fork, must be "aiscatcher"
+
+`"version": 1`
+- The version of the **AIS-Catcher-Control** configuration file, only 1 is supported currently
+
+`"input": "RTLSDR"`
+- Must remain "RTLSDR" for the **MastChain** project
+
+`"tuner": "auto"`
+- Gain control: "auto" or 0–50 (recommended: "auto")
+- Higher values increase sensitivity but may introduce noise
+- Decimals allowed (example: 25.5)
+
+`"bandwidth": 19200`
+- RF bandwidth (Hz) 
+- Default 192000
+- Lower values reduce noise
+- Set to 0 to disable
+- RTL-SDR internally rounds to supported values
+
+`"sample_rate": 1536000`
+- RTL-SDR sample rate (Hz)
+- Recommended 1536000 (best performance)
+- Set to 288000 for low CPU usage
+- Use a custom value (not recommended)
+
+`"freqoffset": 0`
+- Frequency correction (Hz)
+- Use if the dongle is frequency shifted
+- Positive or negative integer values allowed
+- 0 means no correction
+- Value is applied in Hz, not PPM, typical values range from -100 to +100
+
+`"biastee": false`
+- Powers active antennas (set "true" for ON, set "false" for OFF)
+- Only enable if the hardware supports it
+
+`"rtlagc": true`
+- RTL-SDR automatic gain control (set "true" for ON, set "false" for OFF)
+- ON - recommended
+- OFF - manual tuning only
+
+`"verbose": true`
+- Detailed receiver logs if set to "true"
+- Useful for debugging and tuning
+
+Save and exit the file (press **CTRL+O** and **Enter** to save, **CTRL+X** to exit).
 
 ### Start the container
 
