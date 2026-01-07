@@ -2,13 +2,13 @@
 
 This repository provides a **multi-architecture Docker image** for running [AIS-catcher](https://github.com/jvde-github/AIS-catcher) as a [MastChain](https://mastchain.io) compatible AIS receiver and uploader.
 
-It supports **amd64** and **arm64**, making it suitable for Raspberry Pi, Linux servers, and Docker Desktop.
+It supports **AMD64** and **ARM64**, making it suitable for Raspberry Pi, Linux servers, and Docker Desktop.
 
 ---
 
 ## Features
 
-- **Multi-architecture:** amd64 and arm64
+- **Multi-architecture:** AMD64 and ARM64
 - **SSL-enabled** for HTTPS uploads to MastChain
 - **Docker Compose ready**
 - **Persistent data storage** via Docker volumes
@@ -19,13 +19,13 @@ It supports **amd64** and **arm64**, making it suitable for Raspberry Pi, Linux 
 
 ## Supported Platforms
 
-- Linux x86_64 (amd64)
+- Linux x86_64 (AMD64)
 - Linux arm64 (Raspberry Pi 4 / 5, 64-bit OS)
 - Docker Desktop (Mac / Windows / Linux)
 
 ---
 
-## Quick Setup (Docker CLI)
+## Quick Setup
 
 ### Create a working directory
 
@@ -39,7 +39,14 @@ mkdir mastchain-ais && cd mastchain-ais
 curl -O https://raw.githubusercontent.com/c-man-the-man/mastchain-ais/main/config.json
 ```
 
-Edit `config.json` by preferences (see full parameters explanation lower).
+#### Edit the configuration **parameters** if needed:
+
+```bash
+nano config.json
+```
+
+- The configuration parameters explanation can be found lower.
+- To save press **CTRL+O** and **Enter**, to exit press **CTRL+X**.
 
 ### Run the container
 
@@ -55,14 +62,14 @@ docker run -d \
   -v 30 \
   -N 8100 \
   -C /data/config.json \
-  -H https://api.mastchain.io/api/submit USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60 \
+  -H https://api.mastchain.io/api/upload USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60 \
   --logfile /data/aiscatcher.log \
   --loglevel info
 ```
 
 **Notes**
-- Replace <YOUR-MASTCHAIN-TOKEN> with your MastChain credentials.
-- The -N 8100 flag enables the HTML Web Viewer on port 8100 (the port can be changed in the CLI).
+- Replace <YOUR-MASTCHAIN-TOKEN> with your **MastChain** credentials (email:token).
+- The `-N 8100` flag enables the **HTML Web Viewer** on port 8100 (the port can be changed in the CLI, use the same for the `-p` and `-N` flags).
 - The Web Viewer can be accessed at: http://host-ip:8100.
 
 ---
@@ -81,25 +88,57 @@ mkdir ~/mastchain-ais && cd ~/mastchain-ais
 docker pull ghcr.io/c-man-the-man/mastchain-ais:latest
 ```
 
-### Create the YAML file
+### Download the YAML file
+
+```bash
+curl -O https://raw.githubusercontent.com/C-Man-The-Man/mastchain-ais/refs/heads/main/docker-compose.yml
+```
+
+#### Edit the YAML file
 
 ```bash
 nano docker-compose.yml
 ```
-- Copy the contents of this repository’s docker-compose.yml 
-- Replace your MastChain credentials (email:token) 
-- Save and exit the file (press **CTRL+O** and **Enter** to save, **CTRL+X** to exit).
 
-### Create the configuration file
+- Replace <YOUR-MASTCHAIN-TOKEN> with your **MastChain** credentials (email:token).
+- To save press **CTRL+O** and **Enter**, to exit press **CTRL+X**.
+
+### Download the configuration file
+
+```bash
+curl -O https://raw.githubusercontent.com/c-man-the-man/mastchain-ais/main/config.json
+```
+
+#### Edit the configuration **parameters** if needed:
 
 ```bash
 nano config.json
 ```
 
-- Copy the contents of this repository’s config.json
-- Edit the config.json **parameters** if needed
+- The configuration parameters explanation can be found lower.
+- To save press **CTRL+O** and **Enter**, to exit press **CTRL+X**.
 
-#### Parameters explanation
+### Start the container
+
+```bash
+docker compose up -d
+```
+
+### View logs
+
+```bash
+docker compose logs -f
+```
+
+### Stop and remove the container
+
+```bash
+docker compose down
+```
+
+---
+
+## Configuration file parameters explanation
 
 `"config": "aiscatcher"`
 - Don't change, this image is an **AIS-Catcher-Control** fork, must be "aiscatcher"
@@ -147,26 +186,6 @@ nano config.json
 `"verbose": true`
 - Detailed receiver logs if set to "true"
 - Useful for debugging and tuning
-
-Save and exit the file (press **CTRL+O** and **Enter** to save, **CTRL+X** to exit).
-
-### Start the container
-
-```bash
-docker compose up -d
-```
-
-### View logs
-
-```bash
-docker compose logs -f
-```
-
-### To stop and remove the container
-
-```bash
-docker compose down
-```
 
 ---
 

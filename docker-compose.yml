@@ -23,7 +23,7 @@ services:
       -v 30
       -N 8100
       -C /data/config.json
-      -H https://api.mastchain.io/api/submit USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60
+      -H https://api.mastchain.io/api/upload USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60
       --logfile /data/aiscatcher.log
       --loglevel info
 
