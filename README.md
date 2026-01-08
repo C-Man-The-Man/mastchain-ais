@@ -68,7 +68,7 @@ docker run -d \
 ```
 
 **Notes**
-- Replace <YOUR-MASTCHAIN-TOKEN> with your **MastChain** credentials (email:token).
+- Replace `<YOUR-MASTCHAIN-TOKEN>` with your **MastChain** credentials (email:token).
 - The `-N 8100` flag enables the **HTML Web Viewer** on port 8100 (the port can be changed in the CLI, use the same for the `-p` and `-N` flags).
 - The Web Viewer can be accessed at: http://host-ip:8100.
 
@@ -100,7 +100,7 @@ curl -O https://raw.githubusercontent.com/C-Man-The-Man/mastchain-ais/refs/heads
 nano docker-compose.yml
 ```
 
-- Replace <YOUR-MASTCHAIN-TOKEN> with your **MastChain** credentials (email:token).
+- Replace `<YOUR-MASTCHAIN-TOKEN>` with your **MastChain** credentials (email:token).
 - To save press **CTRL+O** and **Enter**, to exit press **CTRL+X**.
 
 ### Download the configuration file
