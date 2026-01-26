@@ -54,23 +54,29 @@ nano config.json
 docker run -d \
   --name mastchain-ais \
   --restart unless-stopped \
-  --device /dev/bus/usb:/dev/bus/usb \
+  -e TZ=YOUR-TIMEZONE \
   -p 8100:8100 \
-  -v $(pwd)/config.json:/data/config.json:ro \
+  --device /dev/bus/usb:/dev/bus/usb \
+  -v "$(pwd)/config.json:/data/config.json:ro" \
   -v mastchain_data:/data \
   ghcr.io/c-man-the-man/mastchain-ais:latest \
-  -v 30 \
-  -N 8100 \
   -C /data/config.json \
-  -H https://api.mastchain.io/api/upload USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60 \
-  --logfile /data/aiscatcher.log \
-  --loglevel info
+  -H https://api.mastchain.io/api/upload USERPWD YOUR-MASTCHAIN-EMAIL:TOKEN INTERVAL 60 \
+  -p 0 \
+  -v 30 \
+  -N 8100 share_loc off use_gps on
 ```
 
-**Notes**
-- Replace `<YOUR-MASTCHAIN-TOKEN>` with your **MastChain** credentials (email:token).
-- The `-N 8100` flag enables the **HTML Web Viewer** on port 8100 (the port can be changed in the CLI, use the same for the `-p` and `-N` flags).
-- The Web Viewer can be accessed at: http://host-ip:8100.
+**Notes and parameters**
+- Replace `YOUR-TIMEZONE` with the host's timezone.
+- Replace `YOUR-MASTCHAIN-EMAIL:TOKEN` with your **MastChain** credentials (email:token).
+- `-p` flag enables frequency correction in PPM (0=no correction).
+- `-v` flag enables verbose interval in seconds (min 5, max 3600)
+- `-N` flag enables the **HTML Web Viewer** at the designed TCP port (default 8100); to change the port, match with the exposed port `-p` (`-p 8100:8100` <-> `-N 8100`)
+- `share_loc` (default `off`, privacy reasons) and `usg_gps`(default `on`) subcommands enable GPS NMEA sharing and respectively reading for the Web Viewer 
+- The Web Viewer can be accessed at: http://host-ip:port.
+- Optional, add `-X UUID` to share the data with the community feed at https://www.aiscatcher.org/.
+- Optional, add `-e baudrate serial_device` to read GPS NMEA data from a GPS module (requires a GPS module attached to the host).
 
 ---
 
@@ -100,7 +106,9 @@ curl -O https://raw.githubusercontent.com/C-Man-The-Man/mastchain-ais/refs/heads
 nano docker-compose.yml
 ```
 
-- Replace `<YOUR-MASTCHAIN-TOKEN>` with your **MastChain** credentials (email:token).
+- Replace `YOUR-TIMEZONE` with the host's timezone.
+- Replace `YOUR-MASTCHAIN-EMAIL:TOKEN` with your **MastChain** credentials (email:token).
+- Additional parameters explained by the Quick Setup section.
 - To save press **CTRL+O** and **Enter**, to exit press **CTRL+X**.
 
 ### Download the configuration file
@@ -198,6 +206,7 @@ docker compose down
 - No login required
 - Only requires the container to be running with -N 8100 and the port exposed
 - Recommended for diagnostics and tuning
+- Can expose GPS location
 
 ---
 

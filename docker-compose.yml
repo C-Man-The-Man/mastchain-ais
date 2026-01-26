@@ -10,23 +10,17 @@ services:
       - /dev/bus/usb:/dev/bus/usb
 
     ports:
-      - "8100:8100"   # change if needed, use the same port for the -N flag
+      - "8100:8100"
 
     volumes:
       - ./config.json:/data/config.json:ro
       - mastchain_data:/data
 
     environment:
-      TZ: Europe/Madrid   # change to your timezone
+      TZ: YOUR-TIMEZONE
 
-    command: >
-      -v 30
-      -N 8100
-      -C /data/config.json
-      -H https://api.mastchain.io/api/upload USERPWD <YOUR-MASTCHAIN-TOKEN> INTERVAL 60
-      --logfile /data/aiscatcher.log
-      --loglevel info
+    command: -C /data/config.json -H https://api.mastchain.io/api/upload USERPWD YOUR-MASTCHAIN-EMAIL:TOKEN INTERVAL 60 -p 0 -v 30 -N 8100 share_loc off use_gps on
 
 volumes:
   mastchain_data:
-
+    name: mastchain_data

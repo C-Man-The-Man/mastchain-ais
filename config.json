@@ -10,7 +10,8 @@
         "sample_rate": 1536000,
         "freqoffset": 0,
         "biastee": false,
-        "rtlagc": true
+        "rtlagc": true,
+        "buffer_count": 24
       },
       "verbose": true
     }
