@@ -160,27 +160,29 @@ docker compose down
 `"tuner": "auto"`
 - Gain control: "auto" or 0–50 (recommended: "auto")
 - Higher values increase sensitivity but may introduce noise
-- Decimals allowed (example: 25.5)
+- Decimals allowed (example: 21.7)
+- Decimal values between 0 and 50
 
 `"bandwidth": 19200`
 - RF bandwidth (Hz) 
 - Default 192000
 - Lower values reduce noise
-- Set to 0 to disable
+- Set to 0 for auto
+- Integer values between 0 and 1,000,000
 - RTL-SDR internally rounds to supported values
 
 `"sample_rate": 1536000`
 - RTL-SDR sample rate (Hz)
 - Recommended 1536000 (best performance)
 - Set to 288000 for low CPU usage
-- Use a custom value (not recommended)
+- Integer numbers between 0 and 20,000,000
 
 `"freqoffset": 0`
-- Frequency correction (Hz)
+- Frequency correction (PPM)
 - Use if the dongle is frequency shifted
 - Positive or negative integer values allowed
 - 0 means no correction
-- Value is applied in Hz, not PPM, typical values range from -100 to +100
+- Integer values between -150 and 150
 
 `"biastee": false`
 - Powers active antennas (set "true" for ON, set "false" for OFF)
