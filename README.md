@@ -2,7 +2,7 @@
 
 ## 🚀 Important Update - v1.2.0 (April 2026)
 
-**Major improvement:**  
+**Major improvement:**
 The build source switched from the original `jvde-github/AIS-catcher` to the official [**MastChain** `mastradar` fork](https://github.com/mastchain/mastradar).
 
 **What changed:**
@@ -10,11 +10,37 @@ The build source switched from the original `jvde-github/AIS-catcher` to the off
 - Your station will now stay **permanently Online** on the MastChain dashboard — even if it receives zero AIS messages (perfect for inland testers or low-traffic areas).
 - All previous functionality (RTL-SDR only, web viewer, GPS support on `/dev/ttyACM1`, config.json, etc.) remains **100% unchanged and compatible**.
 
-**For users:**  
-Just run:
+### For users:
+
+#### Quick setup users (docker run command)
+
+- stop and remove the container
+
+```bash
+docker stop mastchain-ais
+docker rm mastchain-ais
+```
+
+- run the container command from the **Quick Setup** section from this guide
+
+
+#### Advanced setup users (docker compose)
+
+- stop and remove the container
+
+```bash
+docker compose down
+```
+
+- pull the new image and run the container
+
 ```bash
 docker compose pull && docker compose up -d
 ```
+
+- check the **Advanced Recommended Setup** section for more info
+
+---
 
 This repository provides a **multi-architecture Docker image** for running [AIS-catcher](https://github.com/jvde-github/AIS-catcher) as a [MastChain](https://app.mastchain.io/auth/sign-in?ref=xeX9FeN5) compatible AIS receiver and uploader.
 
@@ -96,7 +122,7 @@ docker run -d \
 
 ---
 
-## Docker Compose Setup (recommended)
+## Advanced Recommended Setup (docker compose)
 
 ### Create a working directory
 
