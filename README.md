@@ -3,7 +3,7 @@
 ## 🚀 Important Update - v1.2.0 (April 2026)
 
 **Major improvement:**  
-We have switched the build source from the original `jvde-github/AIS-catcher` to the official **MastChain `mastradar`** fork (`https://github.com/mastchain/mastradar`).
+The build source switched from the original `jvde-github/AIS-catcher` to the official [**MastChain** `mastradar` fork](https://github.com/mastchain/mastradar).
 
 **What changed:**
 - Added official **keep-alive / heartbeat** feature.
@@ -16,7 +16,7 @@ Just run:
 docker compose pull && docker compose up -d
 ```
 
-This repository provides a **multi-architecture Docker image** for running [AIS-catcher](https://github.com/jvde-github/AIS-catcher) as a [MastChain](https://mastchain.io) compatible AIS receiver and uploader.
+This repository provides a **multi-architecture Docker image** for running [AIS-catcher](https://github.com/jvde-github/AIS-catcher) as a [MastChain](https://app.mastchain.io/auth/sign-in?ref=xeX9FeN5) compatible AIS receiver and uploader.
 
 It supports **AMD64** and **ARM64**, making it suitable for Raspberry Pi, Linux servers, and Docker Desktop.
 
@@ -248,3 +248,43 @@ A more detailed guide and community support are available on my [Discord Server]
 ## License & Credits
 - **AIS-catcher** is developed by [jvde-github](https://github.com/jvde-github/AIS-catcher) and contributors.
 - This Docker image packages **AIS-catcher** for **MastChain** compatible use.
+
+---
+
+## Consider using my referral code to register your station on the Mastchain network if this repository helped your setup, thank you!
+https://app.mastchain.io/auth/sign-in?ref=xeX9FeN5
+
+---
+
+## Donations
+
+**Bitcoin wallet address**
+```text
+bc1qt9qpxmf0lu00dz8ff92wtpz5jc5tmtxewj7h83
+```
+
+**Litecoin wallet address**
+```text
+ltc1q9d384fqzjcuy9a46d258exa8zqc70lma2ufd0n
+```
+
+**Dogecoin wallet address**
+```text
+DTKb6X1im7p5xVi4w3rBWCqoSL2eLrGiDG
+```
+
+**EVM / Metamask  (ETH, ETC, OCTA, POL, USDT, USDC, DATA etc.)**
+```text
+0x29d5d76F0555605878Ea112fEdcD859d825f45C2
+```
+
+**Solana wallet address**
+```text
+F5VVkpFoh1nccBu62mnviNxDQBVd9QQ16yLTXrBoVpdw
+```
+
+**Kadena wallet address**
+```text
+k:174f94ba7aa54eca1515f87b0f5deb1725cad6f7116f2277885e45af53908ae5
+```
+**Thank you!**
