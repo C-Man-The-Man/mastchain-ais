@@ -1,5 +1,21 @@
 # MastChain AIS Docker Image
 
+## 🚀 Important Update - v1.2.0 (April 2026)
+
+**Major improvement:**  
+We have switched the build source from the original `jvde-github/AIS-catcher` to the official **MastChain `mastradar`** fork (`https://github.com/mastchain/mastradar`).
+
+**What changed:**
+- Added official **keep-alive / heartbeat** feature.
+- Your station will now stay **permanently Online** on the MastChain dashboard — even if it receives zero AIS messages (perfect for inland testers or low-traffic areas).
+- All previous functionality (RTL-SDR only, web viewer, GPS support on `/dev/ttyACM1`, config.json, etc.) remains **100% unchanged and compatible**.
+
+**For users:**  
+Just run:
+```bash
+docker compose pull && docker compose up -d
+```
+
 This repository provides a **multi-architecture Docker image** for running [AIS-catcher](https://github.com/jvde-github/AIS-catcher) as a [MastChain](https://mastchain.io) compatible AIS receiver and uploader.
 
 It supports **AMD64** and **ARM64**, making it suitable for Raspberry Pi, Linux servers, and Docker Desktop.
