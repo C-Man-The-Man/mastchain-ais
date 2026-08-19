@@ -216,7 +216,21 @@ docker compose down
    - SDRplay: `"sdrplay"`
    - SoapySDR: `"soapysdr"`
    - HydraSDR: `"hydrasdr"`
-- Warning: not all the presented parameters are compatible with all the supported input hardware, the following ones and values are for the RTL SDR ones
+- examples of usage in the `config.json` file
+
+   ```bash
+   "input": "RTLSDR",
+   "rtlsdr": {
+   ```
+
+   ```bash
+   "input": "airspy",
+   "airspy": {
+   ```
+
+   etc.
+   
+- Warning: not all the presented parameters are compatible with all the supported input hardware, the following ones and their values are for the *RTL SDR* ones
 
 `"tuner": "auto"`
 - Gain control: "auto" or 0–50 (recommended: "auto")
