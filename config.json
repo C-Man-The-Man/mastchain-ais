@@ -6,7 +6,7 @@
       "input": "RTLSDR",
       "rtlsdr": {
         "tuner": "auto",
-        "bandwidth": 192000,
+        "bandwidth": 0,
         "sample_rate": 1536000,
         "freqoffset": 0,
         "biastee": false,
