@@ -118,10 +118,10 @@ docker run -d \
 **Notes and parameters**
 - Replace `YOUR-TIMEZONE` with the host's timezone.
 - Replace `YOUR-MASTCHAIN-EMAIL:TOKEN` with your **MastChain** credentials (email:token).
-- `-p` flag enables frequency correction in PPM (0=no correction).
+- `-p` flag enables frequency correction in PPM (0=no correction) - not the `-p` flag before the image that represents the exposed port (`-p 8100:8100`).
 - `-v` flag enables verbose interval in seconds (min 5, max 3600)
-- `-N` flag enables the **HTML Web Viewer** at the designed TCP port (default 8100); to change the port, match with the exposed port `-p` (`-p 8100:8100` <-> `-N 8100`)
-- `share_loc` (default `off`, privacy reasons) and `usg_gps`(default `on`) subcommands enable GPS NMEA sharing and respectively reading for the Web Viewer 
+- `-N` flag enables the **HTML Web Viewer** at the designed TCP port (default 8100); to change the port, match with the exposed port `-p` stated before the image (`-p 8100:8100` <-> `-N 8100`)
+- `share_loc` (default `off`, privacy reasons) and `usg_gps` (default `on`) subcommands enable GPS NMEA sharing and respectively reading for the Web Viewer 
 - The Web Viewer can be accessed at: http://host-ip:port.
 - Optional, add at the end `-X UUID` to share the data with the community feed at https://www.aiscatcher.org/.
 - Optional, add at the end `-e baudrate serial_device` to read GPS NMEA data from a GPS module (requires a GPS module attached to the host);
@@ -208,7 +208,8 @@ docker compose down
 - The version of the **AIS-Catcher-Control** configuration file, only 1 is supported currently
 
 `"input": "RTLSDR"`
-- using a different SDR should be supported automatically, contrary, use the one of **hardware supported input options**:
+- using a different SDR should be supported automatically, if not specifically specified in the `config.json` file,
+contrary, use the one of **hardware supported input options**:
    - RTL SDR: `"RTLSDR"` (default)
    - Airspy: `"airspy"`
    - Airspy HF+: `"airspyhf"`
