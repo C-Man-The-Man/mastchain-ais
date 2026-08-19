@@ -3,12 +3,12 @@
 ## 🚀 Important Update - v1.2.0 (April 2026)
 
 **Major improvement:**
-The build source switched from the original `jvde-github/AIS-catcher` to the official [**MastChain** `mastradar` fork](https://github.com/mastchain/mastradar).
+The build source switched from the original `jvde-github/AIS-catcher` to the official [**MastChain's mastradar fork](https://github.com/mastchain/mastradar).
 
 **What changed:**
 - Added official **keep-alive / heartbeat** feature.
 - Your station will now stay **permanently Online** on the MastChain dashboard — even if it receives zero AIS messages (perfect for inland testers or low-traffic areas).
-- All previous functionality (RTL-SDR only, web viewer, GPS support on `/dev/ttyACM1`, config.json, etc.) remains **100% unchanged and compatible**.
+- All previous functionality (RTL-SDR only, web viewer, GPS support on `/dev/ttyACM0`, config.json, etc.) remains **100% unchanged and compatible**.
 
 ### For users:
 
@@ -24,7 +24,7 @@ docker rm mastchain-ais
 - run the container command from the **Quick Setup** section from this guide
 
 
-#### Advanced setup users (docker compose)
+#### Advanced setup users (docker compose) - commands inside the working directory
 
 - stop and remove the container
 
@@ -45,6 +45,12 @@ docker compose pull && docker compose up -d
 This repository provides a **multi-architecture Docker image** for running [AIS-catcher](https://github.com/jvde-github/AIS-catcher) as a [MastChain](https://app.mastchain.io/auth/sign-in?ref=xeX9FeN5) compatible AIS receiver and uploader.
 
 It supports **AMD64** and **ARM64**, making it suitable for Raspberry Pi, Linux servers, and Docker Desktop.
+
+---
+
+## Recommended use
+
+Use this build with the [**MastChain Configuration Script**](https://github.com/C-Man-The-Man/mastchain-config) one for automation.
 
 ---
 
@@ -117,8 +123,13 @@ docker run -d \
 - `-N` flag enables the **HTML Web Viewer** at the designed TCP port (default 8100); to change the port, match with the exposed port `-p` (`-p 8100:8100` <-> `-N 8100`)
 - `share_loc` (default `off`, privacy reasons) and `usg_gps`(default `on`) subcommands enable GPS NMEA sharing and respectively reading for the Web Viewer 
 - The Web Viewer can be accessed at: http://host-ip:port.
-- Optional, add `-X UUID` to share the data with the community feed at https://www.aiscatcher.org/.
-- Optional, add `-e baudrate serial_device` to read GPS NMEA data from a GPS module (requires a GPS module attached to the host).
+- Optional, add at the end `-X UUID` to share the data with the community feed at https://www.aiscatcher.org/.
+- Optional, add at the end `-e baudrate serial_device` to read GPS NMEA data from a GPS module (requires a GPS module attached to the host);
+   - use
+   ```bash
+   stty -F /dev/ttyACM0
+   ```
+   to find out the baud speed rate of the GPS module.
 
 ---
 
@@ -197,7 +208,15 @@ docker compose down
 - The version of the **AIS-Catcher-Control** configuration file, only 1 is supported currently
 
 `"input": "RTLSDR"`
-- Must remain "RTLSDR" for the **MastChain** project
+- using a different SDR should be supported automatically, contrary, use the one of **hardware supported input options**:
+   - RTL SDR: `"RTLSDR"` (default)
+   - Airspy: `"airspy"`
+   - Airspy HF+: `"airspyhf"`
+   - HackRF: `"hackrf"`
+   - SDRplay: `"sdrplay"`
+   - SoapySDR: `"soapysdr"`
+   - HydraSDR: `"hydrasdr"`
+- Warning: not all the presented parameters are compatible with all the supported input hardware, the following ones and values are for the RTL SDR ones
 
 `"tuner": "auto"`
 - Gain control: "auto" or 0–50 (recommended: "auto")
@@ -205,18 +224,17 @@ docker compose down
 - Decimals allowed (example: 21.7)
 - Decimal values between 0 and 50
 
-`"bandwidth": 19200`
+`"bandwidth": 0`
 - RF bandwidth (Hz) 
-- Default 192000
-- Lower values reduce noise
-- Set to 0 for auto
+- Default 0
+- Set to 0 for no bandwidth filter (suited for most setups)
 - Integer values between 0 and 1,000,000
 - RTL-SDR internally rounds to supported values
 
 `"sample_rate": 1536000`
 - RTL-SDR sample rate (Hz)
 - Recommended 1536000 (best performance)
-- Set to 288000 for low CPU usage
+- Set to `288000` for low CPU usage
 - Integer numbers between 0 and 20,000,000
 
 `"freqoffset": 0`
@@ -262,7 +280,7 @@ A more detailed guide and community support are available on my [Discord Server]
 
 ## Notes
 
-- A [MastChain account](https://app.mastchain.io/) is needed prior.
+- A [**MastChain account**]([https://app.mastchain.io/](https://app.mastchain.io/auth/sign-in?ref=xeX9FeN5)) is needed prior (referral link, support my work, thank you).
 - USB access is required for RTL-SDR devices: `--device /dev/bus/usb:/dev/bus/usb`.
 - The image automatically selects the correct architecture (amd64 or arm64).
 - SSL support is enabled for secure HTTPS submissions to MastChain.
@@ -273,13 +291,7 @@ A more detailed guide and community support are available on my [Discord Server]
 
 ## License & Credits
 - **AIS-catcher** is developed by [jvde-github](https://github.com/jvde-github/AIS-catcher) and contributors.
-- This Docker image packages **AIS-catcher** for **MastChain** compatible use.
-
----
-
-## Consider using my referral code to register your station on the Mastchain network if this repository helped your setup, thank you!
-https://app.mastchain.io/auth/sign-in?ref=xeX9FeN5
-
+- This Docker image packages a minimalistic **AIS-catcher** for **MastChain** compatible use.
 
 ---
 
